@@ -1,0 +1,10 @@
+language: java
+jdk: oraclejdk8
+
+sudo: false
+
+# Undo _JAVA_OPTIONS environment variable
+before_script:
+  - unset _JAVA_OPTIONS
+
+script: "mvn cobertura:cobertura"
