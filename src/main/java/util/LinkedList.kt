@@ -1,5 +1,7 @@
 package util
 
+import sun.plugin.dom.exception.InvalidStateException
+
 class LinkedList<E>(override var size: Int = 0) : MutableList<E> {
     var head: LinkedListNode<E>? = null
 
@@ -37,7 +39,19 @@ class LinkedList<E>(override var size: Int = 0) : MutableList<E> {
     }
 
     override fun lastIndexOf(element: E): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        var lastIndex = -1
+
+        var next = this.head
+        var index = 0
+        while (next != null) {
+            if (next.value == element) {
+                lastIndex = index
+            }
+            index++
+            next = next.next
+        }
+
+        return lastIndex
     }
 
     override fun add(element: E): Boolean {
@@ -57,11 +71,22 @@ class LinkedList<E>(override var size: Int = 0) : MutableList<E> {
     }
 
     override fun addAll(index: Int, elements: Collection<E>): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val previousSize = this.size
+        var insertPoint = this.head
+
+        (0 until index).forEach { insertPoint = insertPoint?.next }
+        val next = insertPoint?.next
+        for (element in elements) {
+            insertPoint?.next = LinkedListNode(element)
+            insertPoint = insertPoint?.next
+        }
+        insertPoint?.next = next
+
+        return this.size == previousSize + elements.size
     }
 
     override fun addAll(elements: Collection<E>): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return addAll(size, elements)
     }
 
     override fun clear() {
@@ -78,23 +103,54 @@ class LinkedList<E>(override var size: Int = 0) : MutableList<E> {
     }
 
     override fun remove(element: E): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val previousSize = this.size
+        if (this.head?.value == element) {
+            this.head = this.head?.next
+        } else {
+            var current = this.head
+            while (current?.next != null) {
+                if (current?.next?.value == element) {
+                    current?.next = current?.next?.next
+                } else {
+                    current = current?.next
+                }
+            }
+        }
+        return this.size == previousSize + 1
     }
 
     override fun removeAll(elements: Collection<E>): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val previousSize = this.size
+        this
+                .filter { elements.contains(it) }
+                .forEach { this.remove(it) }
+        return this.size != previousSize
     }
 
     override fun removeAt(index: Int): E {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (index > this.size) throw IndexOutOfBoundsException()
+        var node = this.head
+        (0 until index).forEach { node = node?.next ?: throw IllegalStateException() }
+        val previousValue = node?.value
+        node?.next = node?.next?.next
+        return previousValue ?: throw IllegalStateException()
     }
 
     override fun retainAll(elements: Collection<E>): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val previousSize = this.size
+        this
+                .filterNot { elements.contains(it) }
+                .forEach { this.remove(it) }
+        return this.size != previousSize
     }
 
     override fun set(index: Int, element: E): E {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (index > this.size) throw IndexOutOfBoundsException()
+        var node = this.head
+        (0 until index).forEach { node = node?.next ?: throw IllegalStateException() }
+        val previousValue = node?.value
+        node?.value = element
+        return previousValue ?: throw IllegalStateException()
     }
 
     override fun subList(fromIndex: Int, toIndex: Int): MutableList<E> {
