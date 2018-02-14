@@ -1,7 +1,5 @@
 package util
 
-import sun.plugin.dom.exception.InvalidStateException
-
 class LinkedList<E>(override var size: Int = 0) : MutableList<E> {
     var head: LinkedListNode<E>? = null
 
@@ -64,7 +62,7 @@ class LinkedList<E>(override var size: Int = 0) : MutableList<E> {
         val adding = LinkedListNode(element)
         if (head == null) head = LinkedListNode(element) else {
             var next = head
-            (0..index).forEach { next = next?.next ?: throw IllegalStateException() }
+            (0 until index - 1).forEach { next = next?.next ?: throw IllegalStateException() }
             next?.next = adding
         }
         size++
@@ -74,11 +72,12 @@ class LinkedList<E>(override var size: Int = 0) : MutableList<E> {
         val previousSize = this.size
         var insertPoint = this.head
 
-        (0 until index).forEach { insertPoint = insertPoint?.next }
+        (0 until index - 1).forEach { insertPoint = insertPoint?.next }
         val next = insertPoint?.next
         for (element in elements) {
             insertPoint?.next = LinkedListNode(element)
             insertPoint = insertPoint?.next
+            size++
         }
         insertPoint?.next = next
 
@@ -109,10 +108,11 @@ class LinkedList<E>(override var size: Int = 0) : MutableList<E> {
         } else {
             var current = this.head
             while (current?.next != null) {
-                if (current?.next?.value == element) {
-                    current?.next = current?.next?.next
+                if (current.next?.value == element) {
+                    current.next = current.next?.next
+                    size--
                 } else {
-                    current = current?.next
+                    current = current.next
                 }
             }
         }
@@ -130,9 +130,10 @@ class LinkedList<E>(override var size: Int = 0) : MutableList<E> {
     override fun removeAt(index: Int): E {
         if (index > this.size) throw IndexOutOfBoundsException()
         var node = this.head
-        (0 until index).forEach { node = node?.next ?: throw IllegalStateException() }
+        (0 until index - 1).forEach { node = node?.next ?: throw IllegalStateException() }
         val previousValue = node?.value
         node?.next = node?.next?.next
+        size--
         return previousValue ?: throw IllegalStateException()
     }
 
@@ -147,7 +148,7 @@ class LinkedList<E>(override var size: Int = 0) : MutableList<E> {
     override fun set(index: Int, element: E): E {
         if (index > this.size) throw IndexOutOfBoundsException()
         var node = this.head
-        (0 until index).forEach { node = node?.next ?: throw IllegalStateException() }
+        (0 until index - 1).forEach { node = node?.next ?: throw IllegalStateException() }
         val previousValue = node?.value
         node?.value = element
         return previousValue ?: throw IllegalStateException()
@@ -169,6 +170,7 @@ class LinkedList<E>(override var size: Int = 0) : MutableList<E> {
         override fun next(): E {
             val current = next ?: throw NoSuchElementException()
             next = current.next
+            cursor++
             return current.value
         }
 
