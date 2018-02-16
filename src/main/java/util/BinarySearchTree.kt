@@ -1,6 +1,8 @@
 package util
 
 class BinarySearchTree<E>(override var size: Int) : MutableCollection<E> {
+    private var root: BinarySearchTreeNode<E>? = null
+
     override fun contains(element: E): Boolean {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -30,7 +32,7 @@ class BinarySearchTree<E>(override var size: Int) : MutableCollection<E> {
     }
 
     override fun iterator(): MutableIterator<E> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return Itr()
     }
 
     override fun remove(element: E): Boolean {
@@ -53,5 +55,19 @@ class BinarySearchTree<E>(override var size: Int) : MutableCollection<E> {
             }
         }
         return changed
+    }
+
+    open inner class Itr : MutableIterator<E> {
+        override fun hasNext(): Boolean {
+            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        }
+
+        override fun next(): E {
+            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        }
+
+        override fun remove() {
+            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        }
     }
 }
