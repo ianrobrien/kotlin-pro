@@ -1,4 +1,11 @@
 # kotlin-pro
-A space to learn about Kotlin
 
-Build Status:
+[![Build Status](https://travis-ci.org/ianrobrien/kotlin-pro.svg?branch=develop)](https://travis-ci.org/ianrobrien/kotlin-pro)
+
+This is a small project I created in order to teach myself Kotlin. It will be implementing some Abstract Data types and algorithms.
+
+## License
+
+Copyright (c) Ian R. O'Brien. All rights reserved.
+
+Licensed under the [MIT License v3.0](LICENSE.txt) License.
