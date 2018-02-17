@@ -1,10 +1,28 @@
 package util
 
-class BinarySearchTree<E>(override var size: Int) : MutableCollection<E> {
+class BinarySearchTree<E>(override var size: Int) : MutableCollection<E> where E : Comparable<E> {
     private var root: BinarySearchTreeNode<E>? = null
 
     override fun contains(element: E): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return containsRec(this.root, element)
+    }
+
+    private fun containsRec(node: BinarySearchTreeNode<E>?, element: E): Boolean {
+        if (node == null) {
+            return false
+        }
+        if (element < node.value) {
+            return if (node.left?.value == element) {
+                true
+            } else {
+                containsRec(node.left, element)
+            }
+        }
+        return if (node.right?.value == element) {
+            true
+        } else {
+            containsRec(node.right, element)
+        }
     }
 
     override fun containsAll(elements: Collection<E>): Boolean {
@@ -17,8 +35,33 @@ class BinarySearchTree<E>(override var size: Int) : MutableCollection<E> {
 
     override fun add(element: E): Boolean {
         val previousSize = this.size
+        if (this.root == null) {
+            this.root = BinarySearchTreeNode(element)
+        } else {
+            addRec(this.root, element)
+        }
         this.size++
         return this.size == previousSize + 1
+    }
+
+    private fun addRec(node: BinarySearchTreeNode<E>?, element: E) {
+        if (node == null) throw IllegalStateException()
+        if (element < node.value) {
+            if (node.left == null) {
+                node.left = BinarySearchTreeNode(element)
+            } else {
+                addRec(node.left, element)
+                return
+            }
+        } else {
+            if (node.right == null) {
+                node.right = BinarySearchTreeNode(element)
+            } else {
+                addRec(node.right, element)
+                return
+            }
+        }
+        this.size++
     }
 
     override fun addAll(elements: Collection<E>): Boolean {
@@ -28,6 +71,7 @@ class BinarySearchTree<E>(override var size: Int) : MutableCollection<E> {
     }
 
     override fun clear() {
+        this.root = null
         this.size = 0
     }
 
@@ -50,7 +94,7 @@ class BinarySearchTree<E>(override var size: Int) : MutableCollection<E> {
     override fun retainAll(elements: Collection<E>): Boolean {
         var changed = false
         this.forEach {
-            if (elements.contains(it)) {
+            if (!elements.contains(it)) {
                 changed = this.remove(it) || changed
             }
         }
