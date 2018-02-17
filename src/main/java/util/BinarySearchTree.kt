@@ -1,6 +1,6 @@
 package util
 
-class BinarySearchTree<E>(override var size: Int) : MutableCollection<E> where E : Comparable<E> {
+class BinarySearchTree<E>(override var size: Int = 0) : MutableCollection<E> where E : Comparable<E> {
     private var root: BinarySearchTreeNode<E>? = null
 
     override fun contains(element: E): Boolean {
@@ -37,10 +37,10 @@ class BinarySearchTree<E>(override var size: Int) : MutableCollection<E> where E
         val previousSize = this.size
         if (this.root == null) {
             this.root = BinarySearchTreeNode(element)
+            this.size++
         } else {
             addRec(this.root, element)
         }
-        this.size++
         return this.size == previousSize + 1
     }
 
