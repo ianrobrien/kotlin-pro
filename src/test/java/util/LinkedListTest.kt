@@ -9,7 +9,7 @@ import org.junit.runner.RunWith
 import kotlin.test.assertTrue
 
 @RunWith(JUnitPlatform::class)
-public class LinkedListTest : Spek({
+class LinkedListTest : Spek({
     describe("a linked list of integers") {
         val linkedList = LinkedList<Int>()
         on("construction") {
@@ -18,11 +18,15 @@ public class LinkedListTest : Spek({
             }
         }
         on("add") {
-            linkedList.add(0)
+            val newElement = 175
+            linkedList.add(newElement)
             it("should increase in size") {
                 assertTrue(linkedList.size == 1)
-                assertTrue(linkedList[0] == 0)
-                assertTrue(linkedList.indexOf(0) == 0)
+                assertTrue(linkedList[0] == newElement)
+                assertTrue(linkedList.indexOf(newElement) == 0)
+            }
+            it("should contain the new element") {
+                assertTrue(linkedList.contains(newElement))
             }
         }
     }
