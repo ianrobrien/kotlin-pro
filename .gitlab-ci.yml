@@ -1,4 +1,14 @@
+image: openjdk:8-jdk
+
+stages:
+  - build
+  - test
+
 maven-build:
   image: maven:3-jdk-8
   stage: build
-  script: "mvn cobertura:cobertura"
+  script: "mvn compile"
+
+maven-test:
+  stage: test
+  script: "mvn test"
