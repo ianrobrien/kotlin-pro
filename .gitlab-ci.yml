@@ -20,5 +20,3 @@ maven-test:
     paths:
     - target/surefire-reports/*.txt
   script: mvn test -B
-  dependencies:
-  - maven-build
