@@ -5,14 +5,13 @@ stages:
   - build
   - test
 
-artifacts:
-  paths:
-    - target/test-classes
-    - target/surefire-reports
-
 maven-build:
   image: maven:3-jdk-8
   stage: build
+  artifacts:
+    paths:
+      - target/test-classes/
+      - target/surefire-reports/
   script:
     - mvn clean compile -B
 
