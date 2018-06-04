@@ -10,8 +10,8 @@ maven-build:
   stage: build
   artifacts:
     paths:
-      - target/test-classes/
-      - target/surefire-reports/
+    - target/test-classes/*
+    - target/surefire-reports/*.txt
   script:
     - mvn clean compile -B
 
@@ -20,5 +20,8 @@ maven-test:
   stage: test
   dependencies:
     - maven-build
+  artifacts:
+    paths:
+    - target/surefire-reports/*.txt
   script:
     - mvn test -B
