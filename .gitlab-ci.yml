@@ -11,16 +11,14 @@ maven-build:
   artifacts:
     paths:
     - target/classes/*
-  script:
-    - mvn clean compile -B
+  script:  mvn clean compile -B
 
 maven-test:
   image: maven:3-jdk-8
   stage: test
-  dependencies:
-    - maven-build
   artifacts:
     paths:
     - target/surefire-reports/*.txt
-  script:
-    - mvn test -B
+  script: mvn test -B
+  dependencies:
+  - maven-build
