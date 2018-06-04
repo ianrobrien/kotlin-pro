@@ -11,11 +11,11 @@ maven-build:
   image: maven:3-jdk-8
   stage: build
   script:
-    - MAVEN_CLI_OPTS mvn clean compile -B
+    - mvn clean compile -B
 
 maven-test:
   stage: test
   dependencies:
     - maven-build
   script:
-    - $MAVEN_CLI_OPTS mvn test -B
+    - mvn test -B
