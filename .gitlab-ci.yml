@@ -10,8 +10,7 @@ maven-build:
   stage: build
   artifacts:
     paths:
-    - target/test-classes/*
-    - target/surefire-reports/*.txt
+    - target/classes/*
   script:
     - mvn clean compile -B
 
