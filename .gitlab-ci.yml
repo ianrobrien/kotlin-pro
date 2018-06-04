@@ -1,5 +1,8 @@
 image: openjdk:8-jdk
 
+variables:
+  MAVEN_OPTS: -Xmx256m -XX:MaxPermSize=512m
+
 stages:
   - build
   - test
@@ -7,10 +10,12 @@ stages:
 maven-build:
   image: maven:3-jdk-8
   stage: build
-  script: "mvn clean compile -B"
+  script:
+    - MAVEN_CLI_OPTS mvn clean compile -B
 
 maven-test:
   stage: test
   dependencies:
     - maven-build
-  script: "mvn test -B"
+  script:
+    - $MAVEN_CLI_OPTS mvn test -B
