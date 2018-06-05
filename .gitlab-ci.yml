@@ -16,7 +16,7 @@ maven-build:
 pages:
   stage: deploy
   dependencies:
-    - maven-test
+    - maven-build
   script:
     - mv target/site/cobertura/ public/
   artifacts:
