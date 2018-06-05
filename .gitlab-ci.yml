@@ -3,6 +3,7 @@ variables:
 
 stages:
   - build
+  - test
   - deploy
 
 maven-build:
@@ -11,17 +12,26 @@ maven-build:
   script: mvn package -B
   artifacts:
     paths:
+    - target/site/cobertura/*.jar
+
+maven-test:
+  image: maven:3-jdk-8
+  stage: build
+  dependencies:
+    - maven-build
+  script: mvn cobertura:cobertura -B
+  artifacts:
+    paths:
     - target/site/cobertura/*
 
 pages:
   stage: deploy
   dependencies:
-    - maven-build
+    - maven-test
   script:
     - mv target/site/cobertura/ public/
   artifacts:
     paths:
       - public
-    expire_in: 30 days
   only:
     - master
