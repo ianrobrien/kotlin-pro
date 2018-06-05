@@ -1,9 +1,6 @@
 package common
 
-import common.math.factorial
-import common.math.isEven
-import common.math.isOdd
-import common.math.isPrime
+import common.math.*
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.describe
 import org.jetbrains.spek.api.dsl.it
@@ -55,6 +52,17 @@ class MathTest : Spek({
                 assertTrue(isPrime(2903))
                 assertTrue(isPrime(7919))
                 assertFalse(isPrime(7918))
+            }
+        }
+        on("getting the nth value of a fibonacci sequenec") {
+            it ("should return the correct value") {
+                assertEquals(fibonacci(0), 0)
+                assertEquals(fibonacci(1), 1)
+                assertEquals(fibonacci(2), 1)
+                assertEquals(fibonacci(3), 2)
+                assertEquals(fibonacci(4), 3)
+                assertEquals(fibonacci(5), 5)
+                assertEquals(fibonacci(12), 144)
             }
         }
     }

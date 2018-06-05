@@ -34,3 +34,18 @@ fun isPrime(n: Int): Boolean {
         }
     }
 }
+
+/***
+ * f(4) = f(3) + f(2)
+ *      = (f(2) + f(1)) + (f(1) + f(0))
+ *      = ((f(1) + f(0)) + 1) + (1 + 0)
+ *      = ((1 + 0) + 1) + 1
+ *      = 3
+ */
+fun fibonacci(n: Int): Int {
+    return when (n) {
+        0 -> 0
+        1 -> 1
+        else -> fibonacci(n - 1) + fibonacci(n - 2)
+    }
+}
