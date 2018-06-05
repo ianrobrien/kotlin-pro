@@ -8,6 +8,9 @@ stages:
 maven-build:
   image: maven:3-jdk-8
   stage: build
+  artifacts:
+    paths:
+    - target/classes/*
   script:  mvn clean compile -B
 
 maven-test:
