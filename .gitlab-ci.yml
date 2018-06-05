@@ -19,7 +19,7 @@ maven-test:
   stage: test
   dependencies:
     - maven-build
-  coverage: 'coverage line-rate.*?([0-9]{1,3})%'
+  coverage: '/coverage line-rate.*?([0-9]{1,3})%/'
   script:
   - mvn cobertura:cobertura -B
   - mvn corbertura:dump-datafile -B
