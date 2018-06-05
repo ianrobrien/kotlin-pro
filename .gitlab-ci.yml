@@ -19,7 +19,10 @@ maven-test:
   stage: test
   dependencies:
     - maven-build
-  script: mvn cobertura:cobertura -B
+  coverage: 'coverage line-rate.*?([0-9]{1,3})%'
+  script:
+  - mvn cobertura:cobertura -B
+  - mvn corbertura:dump-datafile -B
   artifacts:
     paths:
     - target/site/cobertura/*
