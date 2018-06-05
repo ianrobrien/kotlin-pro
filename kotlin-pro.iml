@@ -3,8 +3,8 @@
   <component name="AutoImportedSourceRoots">
     <option name="directories">
       <list>
+        <option value="src/test" />
         <option value="src/test/java" />
-        <option value="test" />
       </list>
     </option>
   </component>

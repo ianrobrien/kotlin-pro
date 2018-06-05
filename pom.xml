@@ -12,6 +12,7 @@
         <kotlin.version>1.2.41</kotlin.version>
         <spek.version>1.1.5</spek.version>
         <java.version>1.8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
@@ -60,7 +61,14 @@
     </dependencies>
 
     <build>
+        <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
+        <testSourceDirectory>${project.basedir}/src/test/java</testSourceDirectory>
         <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>2.7</version>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -90,7 +98,7 @@
                         </goals>
                         <configuration>
                             <sourceDirs>
-                                <source>test</source>
+                                <source>src/test</source>
                                 <source>src/test/java</source>
                             </sourceDirs>
                         </configuration>
