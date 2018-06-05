@@ -2,22 +2,13 @@ variables:
   MAVEN_OPTS: -Xmx256m -XX:MaxPermSize=512m
 
 stages:
-#  - build
-  - test
+  - build
   - deploy
 
-#maven-build:
-#  image: maven:3-jdk-8
-#  stage: build
-#  artifacts:
-#    paths:
-#    - target/classes/*
-#  script:  mvn clean compile -B
-
-maven-test:
+maven-build:
   image: maven:3-jdk-8
-  stage: test
-  script: mvn cobertura:cobertura -B
+  stage: build
+  script: mvn package -B
   artifacts:
     paths:
     - target/site/cobertura/*

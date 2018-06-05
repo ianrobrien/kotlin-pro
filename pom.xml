@@ -98,7 +98,6 @@
                         </goals>
                         <configuration>
                             <sourceDirs>
-                                <source>src/test</source>
                                 <source>src/test/java</source>
                             </sourceDirs>
                         </configuration>
