@@ -18,11 +18,11 @@ class LinkedList<E>(override var size: Int = 0) : MutableList<E> {
     }
 
     override fun indexOf(element: E): Int {
-        var index = -1
+        var index = 0
         this.forEach {
-            index++
-            if (it == element) {
-                return index
+            when (it) {
+                element -> return index
+                else -> index++
             }
         }
         return -1
@@ -38,15 +38,15 @@ class LinkedList<E>(override var size: Int = 0) : MutableList<E> {
 
     override fun lastIndexOf(element: E): Int {
         var lastIndex = -1
+        var currentIndex = 0
 
-        var next = this.head
-        var index = 0
-        while (next != null) {
-            if (next.value == element) {
-                lastIndex = index
+        var node = this.head
+        while (node != null) {
+            if (node.value == element) {
+                lastIndex = currentIndex
             }
-            index++
-            next = next.next
+            currentIndex++
+            node = node.next
         }
 
         return lastIndex

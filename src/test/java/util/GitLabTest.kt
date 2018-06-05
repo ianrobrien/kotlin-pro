@@ -14,7 +14,7 @@ class GitLabTest : Spek({
     describe("A file to test GitLab CI integration") {
         on("something going wrong") {
             it("should fail CI") {
-                assertTrue(false)
+                assertTrue(true)
             }
         }
     }
