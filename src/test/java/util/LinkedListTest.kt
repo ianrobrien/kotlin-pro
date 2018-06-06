@@ -82,6 +82,20 @@ class LinkedListTest : Spek({
                 assertEquals(2, ll.size)
             }
         }
+        context("removing an element") {
+            beforeEachTest {
+                ll = LinkedList()
+                ll.add(defaultElement)
+            }
+            it("should support removing an element by value") {
+                ll.remove(defaultElement)
+                assertTrue(ll.isEmpty())
+            }
+            it("should support removing an element by index") {
+                ll.removeAt(0)
+                assertTrue(ll.isEmpty())
+            }
+        }
     }
     describe("An LinkedList with multiple elements") {
         lateinit var ll: LinkedList<String>
@@ -142,6 +156,14 @@ class LinkedListTest : Spek({
 
         it("should return the tail when returning lastIndexOf") {
             assertEquals(ll.lastIndexOf(defaultElementFirst), ll.size - 1)
+        }
+        it("should not contain any false items") {
+            assertTrue(!ll.contains("false item"))
+            assertTrue(ll.contains(defaultElementFirst))
+        }
+        it("should clear all items") {
+            ll.clear()
+            assertTrue(ll.isEmpty())
         }
     }
     describe("a linked list of integers") {

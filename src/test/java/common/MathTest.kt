@@ -51,7 +51,8 @@ class MathTest : Spek({
                 assertTrue(isPrime(7))
                 assertTrue(isPrime(2903))
                 assertTrue(isPrime(7919))
-                assertFalse(isPrime(7918))
+                assertFalse(isPrime(7917))
+                assertFalse(isPrime(7915))
             }
         }
         on("getting the nth value of a fibonacci sequenec") {
