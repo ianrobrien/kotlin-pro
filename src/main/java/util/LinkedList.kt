@@ -1,31 +1,38 @@
 package util
 
 class LinkedList<E>(override var size: Int = 0) : MutableList<E> {
-    var head: LinkedListNode<E>? = null
+    private var head: LinkedListNode<E>? = null
 
     override fun contains(element: E): Boolean {
-        return indexOf(element) >= 0
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun containsAll(elements: Collection<E>): Boolean {
-        return elements.all { contains(it) }
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun get(index: Int): E {
-        var current = head
-        (0 until index).forEach { current = current?.next ?: throw IllegalStateException() }
-        return current?.value ?: throw IllegalStateException()
+        rangeCheck(index)
+        return getNode(index).value
+    }
+
+    private fun getNode(index: Int): LinkedListNode<E> {
+        rangeCheck(index)
+        var node = head
+        for (i in 0 until index) {
+            node = node?.next
+        }
+        return node ?: throw IllegalStateException()
+    }
+
+    private fun rangeCheck(index: Int) {
+        if (index < 0 || index >= size) {
+            throw IndexOutOfBoundsException("Index: $index, Size: ${this.size}")
+        }
     }
 
     override fun indexOf(element: E): Int {
-        var index = 0
-        this.forEach {
-            when (it) {
-                element -> return index
-                else -> index++
-            }
-        }
-        return -1
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun isEmpty(): Boolean {
@@ -33,187 +40,98 @@ class LinkedList<E>(override var size: Int = 0) : MutableList<E> {
     }
 
     override fun iterator(): MutableIterator<E> {
-        return Itr()
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun lastIndexOf(element: E): Int {
-        var lastIndex = -1
-        var currentIndex = 0
-
-        var node = this.head
-        while (node != null) {
-            if (node.value == element) {
-                lastIndex = currentIndex
-            }
-            currentIndex++
-            node = node.next
-        }
-
-        return lastIndex
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun add(element: E): Boolean {
-        var previousSize = size
-        add(size, element)
-        return size == ++previousSize
+        val previousSize = size
+        if (head == null) {
+            head = LinkedListNode(element)
+        } else {
+            getTailNode()?.next = LinkedListNode(element)
+        }
+        return ++size == previousSize + 1
+    }
+
+    private fun getTailNode(): LinkedListNode<E>? {
+        return if (head == null) {
+            null
+        } else {
+            var tail = head
+            while (tail?.next != null) {
+                tail = tail.next
+            }
+            tail
+        }
     }
 
     override fun add(index: Int, element: E) {
-        val adding = LinkedListNode(element)
-        if (head == null) head = LinkedListNode(element) else {
-            var next = head
-            (0 until index - 1).forEach { next = next?.next ?: throw IllegalStateException() }
-            next?.next = adding
+        rangeCheckForAdd(index)
+        val newNode = LinkedListNode(element)
+        if (index == 0) {
+            // the next node is either the current head or null
+            newNode.next = head
+            head = newNode
+        } else {
+            val splicePoint = getNode(index - 1)
+            newNode.next = splicePoint
+            splicePoint.next = newNode
         }
         size++
     }
 
     override fun addAll(index: Int, elements: Collection<E>): Boolean {
-        val previousSize = this.size
-        var insertPoint = this.head
-
-        (0 until index - 1).forEach { insertPoint = insertPoint?.next }
-        val next = insertPoint?.next
-        for (element in elements) {
-            insertPoint?.next = LinkedListNode(element)
-            insertPoint = insertPoint?.next
-            size++
-        }
-        insertPoint?.next = next
-
-        return this.size == previousSize + elements.size
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun addAll(elements: Collection<E>): Boolean {
-        return addAll(size, elements)
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    private fun rangeCheckForAdd(index: Int) {
+        if (index < 0 || index > size) {
+            throw IndexOutOfBoundsException("Index: $index, Size: ${this.size}")
+        }
     }
 
     override fun clear() {
-        this.head = null
-        this.size = 0
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun listIterator(): MutableListIterator<E> {
-        return ListItr()
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun listIterator(index: Int): MutableListIterator<E> {
-        return ListItr(index)
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun remove(element: E): Boolean {
-        val previousSize = this.size
-        if (this.head?.value == element) {
-            this.head = this.head?.next
-        } else {
-            var current = this.head
-            while (current?.next != null) {
-                if (current.next?.value == element) {
-                    current.next = current.next?.next
-                    size--
-                } else {
-                    current = current.next
-                }
-            }
-        }
-        return this.size == previousSize + 1
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun removeAll(elements: Collection<E>): Boolean {
-        val previousSize = this.size
-        this
-                .filter { elements.contains(it) }
-                .forEach { this.remove(it) }
-        return this.size != previousSize
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun removeAt(index: Int): E {
-        if (index > this.size) throw IndexOutOfBoundsException()
-        var node = this.head
-        (0 until index - 1).forEach { node = node?.next ?: throw IllegalStateException() }
-        val previousValue = node?.value
-        node?.next = node?.next?.next
-        size--
-        return previousValue ?: throw IllegalStateException()
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun retainAll(elements: Collection<E>): Boolean {
-        val previousSize = this.size
-        this
-                .filterNot { elements.contains(it) }
-                .forEach { this.remove(it) }
-        return this.size != previousSize
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun set(index: Int, element: E): E {
-        if (index > this.size) throw IndexOutOfBoundsException()
-        var node = this.head
-        (0 until index - 1).forEach { node = node?.next ?: throw IllegalStateException() }
-        val previousValue = node?.value
-        node?.value = element
-        return previousValue ?: throw IllegalStateException()
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun subList(fromIndex: Int, toIndex: Int): MutableList<E> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    open inner class Itr : MutableIterator<E> {
-        internal var cursor: Int = 0    // index of next element to return
-        internal var lastRet = -1       // index of last element returned; -1 if no such
-        internal var next = head
-
-        override fun hasNext(): Boolean {
-            return cursor != size
-        }
-
-        override fun next(): E {
-            val current = next ?: throw NoSuchElementException()
-            next = current.next
-            cursor++
-            return current.value
-        }
-
-        override fun remove() {
-            if (lastRet < 0) throw IllegalStateException()
-            removeAt(lastRet)
-            lastRet = -1
-        }
-    }
-
-    inner class ListItr() : MutableListIterator<E>, Itr() {
-        constructor(index: Int) : this() {
-            cursor = index
-        }
-
-        override fun hasPrevious(): Boolean {
-            return cursor != 0
-        }
-
-        override fun nextIndex(): Int {
-            return cursor
-        }
-
-        override fun previous(): E {
-            val i = cursor - 1
-            if (i < 0) throw NoSuchElementException()
-            cursor = i
-            var node = head
-            (0..i).forEach { node = node?.next ?: throw IllegalStateException() }
-            return node?.value ?: throw IllegalStateException()
-        }
-
-        override fun previousIndex(): Int {
-            return cursor - 1
-        }
-
-        override fun add(element: E) {
-            add(cursor++, element)
-            lastRet = -1
-        }
-
-        override fun set(element: E) {
-            set(lastRet, element)
-        }
-    }
 }
