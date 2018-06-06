@@ -117,6 +117,69 @@ class LinkedListTest : Spek({
                 assertEquals(tailElement, ll[2])
                 assertEquals(3, ll.size)
             }
+            it("should check contains on all elements") {
+                val tailElement = getTestElement()
+                ll.add(tailElement)
+                assertTrue(ll.contains(defaultElementFirst))
+                assertTrue(ll.contains(defaultElementSecond))
+                assertTrue(ll.contains(tailElement))
+
+                val arrayList = java.util.ArrayList<String>()
+                arrayList.add(defaultElementFirst)
+                arrayList.add(defaultElementSecond)
+                arrayList.add(tailElement)
+
+                assertTrue(ll.containsAll(arrayList))
+            }
+        }
+    }
+    describe("a linked list of duplicate items") {
+        val ll = LinkedList<String>()
+        val defaultElementFirst = getTestElement()
+        ll.add(defaultElementFirst)
+        ll.add(defaultElementFirst)
+        ll.add(defaultElementFirst)
+
+        it("should return the tail when returning lastIndexOf") {
+            assertEquals(ll.lastIndexOf(defaultElementFirst), ll.size - 1)
+        }
+    }
+    describe("a linked list of integers") {
+        context("should support adding a range") {
+            it("should add a collection to the tail") {
+                val front = LinkedList<Int>()
+                for (i in 0 until 5) {
+                    front.add(i)
+                }
+                val back = LinkedList<Int>()
+                for (i in 5 until 10) {
+                    back.add(i)
+                }
+                front.addAll(back)
+                for (i in 0..9) {
+                    assertEquals(i, front[i])
+                }
+            }
+            it("should add a collection to the middle") {
+                val ll = LinkedList<Int>()
+                ll.add(0)
+                ll.add(1)
+                ll.add(2)
+                ll.add(8)
+                ll.add(9)
+
+                val middle = LinkedList<Int>()
+                middle.add(3)
+                middle.add(4)
+                middle.add(5)
+                middle.add(6)
+                middle.add(7)
+
+                ll.addAll(3, middle)
+                for (i in 0..9) {
+                    assertEquals(i, ll[i])
+                }
+            }
         }
     }
 })
