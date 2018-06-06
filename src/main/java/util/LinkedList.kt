@@ -96,7 +96,6 @@ class LinkedList<E>(override var size: Int = 0) : MutableList<E> {
         rangeCheckForAdd(index)
         val newNode = LinkedListNode(element)
         if (index == 0) {
-            // the next node is either the current head or null
             newNode.next = head
             head = newNode
         } else {
@@ -133,7 +132,8 @@ class LinkedList<E>(override var size: Int = 0) : MutableList<E> {
     }
 
     override fun clear() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        head = null
+        size = 0
     }
 
     override fun listIterator(): MutableListIterator<E> {
@@ -145,15 +145,43 @@ class LinkedList<E>(override var size: Int = 0) : MutableList<E> {
     }
 
     override fun remove(element: E): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (head != null) {
+            if (head?.value == element) {
+                head = head?.next
+                size--
+                return true
+            } else {
+                var current = head
+                while (current?.next != null) {
+                    if (current.next?.value == element) {
+                        current.next = current.next?.next
+                        size--
+                        return true
+                    }
+                    current = current.next
+                }
+            }
+        }
+        return false
     }
 
     override fun removeAll(elements: Collection<E>): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val previousSize = size
+        for (element in elements) {
+            remove(element)
+        }
+        return previousSize != size
     }
 
     override fun removeAt(index: Int): E {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        rangeCheck(index)
+
+        val previousNode = getNode(index - 1)
+        val previousValue = previousNode.next?.value
+
+        previousNode.next = previousNode.next?.next
+
+        return previousValue ?: throw IllegalStateException()
     }
 
     override fun retainAll(elements: Collection<E>): Boolean {
@@ -161,7 +189,13 @@ class LinkedList<E>(override var size: Int = 0) : MutableList<E> {
     }
 
     override fun set(index: Int, element: E): E {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        rangeCheck(index)
+
+        val node = getNode(index)
+        val previousValue = node.value
+        node.value = element
+
+        return previousValue
     }
 
     override fun subList(fromIndex: Int, toIndex: Int): MutableList<E> {
@@ -172,6 +206,7 @@ class LinkedList<E>(override var size: Int = 0) : MutableList<E> {
         internal var cursor: Int = 0    // index of next element to return
         internal var lastRet = -1       // index of last element returned; -1 if no such
         internal var next = head
+        internal var previous: E? = null
 
         override fun hasNext(): Boolean {
             return cursor != size
@@ -179,6 +214,7 @@ class LinkedList<E>(override var size: Int = 0) : MutableList<E> {
 
         override fun next(): E {
             val current = next ?: throw NoSuchElementException()
+            previous = current.value
             next = current.next
             cursor++
             return current.value
@@ -205,12 +241,7 @@ class LinkedList<E>(override var size: Int = 0) : MutableList<E> {
         }
 
         override fun previous(): E {
-            val i = cursor - 1
-            if (i < 0) throw NoSuchElementException()
-            cursor = i
-            var node = head
-            (0..i).forEach { node = node?.next ?: throw IllegalStateException() }
-            return node?.value ?: throw IllegalStateException()
+            return previous ?: throw IllegalStateException()
         }
 
         override fun previousIndex(): Int {
