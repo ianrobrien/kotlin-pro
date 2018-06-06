@@ -1,4 +1,4 @@
-package common.math
+package common.functions
 
 fun factorial(n: Int): Int {
     return when (n) {
