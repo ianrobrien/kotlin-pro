@@ -1,7 +1,7 @@
 # kotlin-pro
 
 [![pipeline status master](https://gitlab.com/ianrobrien/kotlin-pro/badges/master/pipeline.svg)](https://gitlab.com/ianrobrien/kotlin-pro/commits/master)
-[![Coverage report](https://gitlab.com/ianrobrien/kotlin-pro/badges/master/coverage.svg?job=coverage)](https://ianrobrien.gitlab.io/kotlin-pro)
+[![coverage report](https://gitlab.com/ianrobrien/kotlin-pro/badges/master/coverage.svg)](https://ianrobrien.gitlab.io/kotlin-pro)
 
 This is a small project I created in order to teach myself Kotlin. It will be implementing some Abstract Data types and algorithms.
 
