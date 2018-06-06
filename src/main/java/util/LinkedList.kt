@@ -176,10 +176,12 @@ class LinkedList<E>(override var size: Int = 0) : MutableList<E> {
     override fun removeAt(index: Int): E {
         rangeCheck(index)
 
-        val previousNode = getNode(index - 1)
-        val previousValue = previousNode.next?.value
+        val previousNode = if (index == 0) head else getNode(index - 1)
+        val previousValue = previousNode?.value
 
-        previousNode.next = previousNode.next?.next
+        previousNode?.next = previousNode?.next?.next
+
+        size--
 
         return previousValue ?: throw IllegalStateException()
     }
