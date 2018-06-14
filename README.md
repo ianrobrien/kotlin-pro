@@ -5,6 +5,10 @@
 
 This is a small project I created in order to teach myself Kotlin. It will be implementing some Abstract Data types and algorithms.
 
+## Notes
+
+* These data-structures are not very efficient. I believe that this is due to the nature of Kotlin.
+
 ## License
 
 Copyright (c) Ian R. O'Brien. All rights reserved.
