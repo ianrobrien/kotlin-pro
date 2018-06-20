@@ -2,6 +2,7 @@ package common.functions
 
 fun factorial(n: Int): Int {
     return when (n) {
+        in Integer.MIN_VALUE..-1 -> throw IllegalArgumentException()
         0, 1 -> 1
         else -> n * factorial(n - 1)
     }
@@ -44,6 +45,7 @@ fun isPrime(n: Int): Boolean {
  */
 fun fibonacci(n: Int): Int {
     return when (n) {
+        in Integer.MIN_VALUE..-1 -> throw IllegalArgumentException()
         0 -> 0
         1 -> 1
         else -> fibonacci(n - 1) + fibonacci(n - 2)
