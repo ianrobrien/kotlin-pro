@@ -14,4 +14,3 @@ This is a small project I created in order to teach myself Kotlin. It will be im
 Copyright (c) Ian R. O'Brien. All rights reserved.
 
 Licensed under the [MIT](LICENSE) License.
-
