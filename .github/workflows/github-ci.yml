@@ -17,4 +17,6 @@ jobs:
       run: |
         mvn cobertura:cobertura -B        
         mvn cobertura:dump-datafile -B
-
+    - name: publish-coverage
+      run: |
+        mv /home/runner/work/kotlin-pro/kotlin-pro/target/site/cobertura/ /docs/
