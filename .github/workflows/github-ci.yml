@@ -1,0 +1,19 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: maven-build
+      run: |
+        mvn clean -B
+        mvn package -B
+    - name: maven-test
+        mvn cobertura:cobertura -B
+        mvn cobertura:dump-datafile -B
+
